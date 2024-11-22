@@ -93,7 +93,7 @@
                 const imgDiv = document.querySelector(`#imgDiv${date}`);
                 if (imgDiv.style.display == 'none') {
                     btn.innerHTML = 'Hide Images';
-                    imgDiv.style.display = 'grid';
+                    imgDiv.removeAttribute('style');
                 } else {
                     btn.innerHTML = 'Show Images';
                     imgDiv.style.display = 'none';
