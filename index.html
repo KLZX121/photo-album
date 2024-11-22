@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <style>
+            * {
+                font-family: sans-serif;
+            }
+            .title {
+                margin-left: 30px;
+            }
+
+            .imgSec {
+                border-top: 2px solid lightgrey;
+                border-bottom: 2px solid lightgrey;
+                margin: 20px;
+                padding: 20px;
+                border-radius: 10px;
+            }
+            .imgDiv {
+                margin-top: 10px;
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
+            }
+            .imgDiv img {
+                width: 100%;
+                height: auto;
+            }
+
+            .toggleImgBtn {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+<body>
+    <h1 class="title">Photo Album</h1>
+
+    <section class="imgSec" id="2024-11-22">
+        <span><b>Date: </b>
+            2024-11-22 Evening
+        </span><br>
+        <span><b>Location: </b>
+            Centennial Park
+        </span><br>
+        <span><b>Subject: </b>
+            Random
+        </span><br>
+        <span style="display: none;" class="imgIdRange">
+            09639-09676
+        </span>
+        <button class="toggleImgBtn">Hide Images</button><br>
+
+    </section>
+
+
+    <script>
+        // load all iamges
+        document.querySelectorAll('.imgSec').forEach(imgSec => {
+            loadImgs(imgSec);
+        });
+        function loadImgs(imgSec) {
+            const date = imgSec.id;
+            const idRange = imgSec.querySelector('.imgIdRange').innerHTML.split('-');
+
+            let imgDiv = document.createElement('div');
+            imgDiv.classList = 'imgDiv';
+            imgDiv.id = `imgDiv${date}`;
+
+            for (let i = idRange[0]; i <= idRange[1]; i++) {
+                let img = document.createElement('img');
+                let imgNum = `${i}`;
+                while (imgNum.length < 5) {
+                    imgNum = `0${imgNum}`;
+                }
+                img.src = `imgs/${date}/DSC${imgNum}.JPG`;
+                imgDiv.appendChild(img);
+
+                img.onerror = () => {imgDiv.removeChild(img)}
+            }
+
+            imgSec.appendChild(imgDiv);
+        }
+
+        // show/hide button functionality
+        document.querySelectorAll('.toggleImgBtn').forEach(btn => {
+            const date = btn.parentElement.id;
+
+            btn.addEventListener('click', () => {
+                const imgDiv = document.querySelector(`#imgDiv${date}`);
+                if (imgDiv.style.display == 'none') {
+                    btn.innerHTML = 'Hide Images';
+                    imgDiv.style.display = 'grid';
+                } else {
+                    btn.innerHTML = 'Show Images';
+                    imgDiv.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
